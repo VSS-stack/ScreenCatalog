@@ -31,8 +31,10 @@ public class ScreencatalogApplication implements CommandLineRunner { //Interface
 		SerieData newSerie = converter.getData(json, SerieData.class);
 		System.out.println(newSerie);
 
-		/* Convert a string into a EpisodeData object */
+		/* Make a new request and return a string */
 		json = apiConsumption.getData("https://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=306f71f9");
+
+		/* Convert a string into a EpisodeData object */
 		EpisodeData newEpisode = converter.getData(json, EpisodeData.class);
 		System.out.println(newEpisode);
 	}
