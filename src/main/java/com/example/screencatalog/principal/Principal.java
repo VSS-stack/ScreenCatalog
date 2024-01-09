@@ -48,7 +48,7 @@ public class Principal {
 
 		/* Print the seasons */
 		seasons.forEach(System.out::println);
-        
+
         /* Print only the title of each episode with lambda expressions */
         seasons.forEach(s -> s.episodes().forEach(e -> System.out.println(e.title())));
     }
