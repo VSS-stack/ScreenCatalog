@@ -1,5 +1,6 @@
 package com.example.screencatalog.principal;
 
+import com.example.screencatalog.model.Episode;
 import com.example.screencatalog.model.EpisodeData;
 import com.example.screencatalog.model.SeasonData;
 import com.example.screencatalog.model.SerieData;
@@ -66,5 +67,13 @@ public class Principal {
                 .sorted(Comparator.comparing(EpisodeData::rating).reversed())
                 .limit(5)
                 .forEach(System.out::println);
+
+        /* Create a list with episode objects */
+        List<Episode> episodes = seasons.stream()
+                .flatMap(s -> s.episodes().stream()
+                        .map(e -> new Episode(s.seasonNumber(), e)))
+                .collect(Collectors.toList());
+
+        episodes.forEach(System.out::println); //print the list
     }
 }
