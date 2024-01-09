@@ -7,8 +7,10 @@ import com.example.screencatalog.service.ApiConsumption;
 import com.example.screencatalog.service.ConvertData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /* Class that show the menu */
 public class Principal {
@@ -51,5 +53,18 @@ public class Principal {
 
         /* Print only the title of each episode with lambda expressions */
         seasons.forEach(s -> s.episodes().forEach(e -> System.out.println(e.title())));
+
+        /* Create a list with all the episodes */
+        List<EpisodeData> episodeData = seasons.stream()
+                .flatMap(s -> s.episodes().stream())
+                .collect(Collectors.toList());
+
+        /* Show the top 5 episodes */
+        System.out.println("\nTop 5 episodes:");
+        episodeData.stream()
+                .filter(e -> !e.rating().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(EpisodeData::rating).reversed())
+                .limit(5)
+                .forEach(System.out::println);
     }
 }
