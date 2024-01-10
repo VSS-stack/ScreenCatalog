@@ -7,6 +7,8 @@ import com.example.screencatalog.model.SerieData;
 import com.example.screencatalog.service.ApiConsumption;
 import com.example.screencatalog.service.ConvertData;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -75,5 +77,21 @@ public class Principal {
                 .collect(Collectors.toList());
 
         episodes.forEach(System.out::println); //print the list
+
+        /* Filter episodes from a year */
+        System.out.println("\nFrom which year do you want to see the episodes?");
+        var startYear = input.nextInt();
+        input.nextLine(); //to handle the enter button
+        LocalDate searchDate = LocalDate.of(startYear, 1, 1);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        episodes.stream()
+                .filter(e -> e.getReleasingDate() != null && e.getReleasingDate().isAfter(searchDate))
+                .forEach(e -> System.out.println(
+                        "Season: " + e.getSeason() +
+                                " - Episode: " + e.getTitle() +
+                                " - Releasing date: " + e.getReleasingDate().format(formatter)
+                ));
     }
 }
