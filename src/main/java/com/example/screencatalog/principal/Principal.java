@@ -63,26 +63,33 @@ public class Principal {
                 .collect(Collectors.toList());
 
         /* Show the top 10 episodes */
-        System.out.println("\nTop 10 episodes:");
-        episodeData.stream()
-                .filter(e -> !e.rating().equalsIgnoreCase("N/A"))
-                .peek(e -> System.out.println("filter " + e))
-                .sorted(Comparator.comparing(EpisodeData::rating).reversed())
-                .peek(e -> System.out.println("sorted " + e))
-                .limit(10)
-                .peek(e -> System.out.println("limit " + e))
-                .map(e -> e.title().toUpperCase())
-                .peek(e -> System.out.println("map " + e))
-                .forEach(System.out::println);
+//        System.out.println("\nTop 10 episodes:");
+//        episodeData.stream()
+//                .filter(e -> !e.rating().equalsIgnoreCase("N/A"))
+//                .peek(e -> System.out.println("filter " + e))
+//                .sorted(Comparator.comparing(EpisodeData::rating).reversed())
+//                .peek(e -> System.out.println("sorted " + e))
+//                .limit(10)
+//                .peek(e -> System.out.println("limit " + e))
+//                .map(e -> e.title().toUpperCase())
+//                .peek(e -> System.out.println("map " + e))
+//                .forEach(System.out::println);
 
-//        /* Create a list with episode objects */
-//        List<Episode> episodes = seasons.stream()
-//                .flatMap(s -> s.episodes().stream()
-//                        .map(e -> new Episode(s.seasonNumber(), e)))
-//                .collect(Collectors.toList());
-//
-//        episodes.forEach(System.out::println); //print the list
-//
+        /* Create a list with episode objects */
+        List<Episode> episodes = seasons.stream()
+                .flatMap(s -> s.episodes().stream()
+                        .map(e -> new Episode(s.seasonNumber(), e)))
+                .collect(Collectors.toList());
+
+        episodes.forEach(System.out::println); //print the list
+
+        /* Search episode from title */
+        System.out.println("\nWrite full/part name of a episode:");
+        var titlePart = input.nextLine(); //read the title part inputted by the user
+        episodes.stream()
+                .filter(e -> e.getTitle().contains(titlePart))
+                .findFirst(); //find the first occurrence of the title part
+
 //        /* Filter episodes from a year */
 //        System.out.println("\nFrom which year do you want to see the episodes?");
 //        var startYear = input.nextInt();
