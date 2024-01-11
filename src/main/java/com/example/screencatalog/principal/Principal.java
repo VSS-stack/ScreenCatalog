@@ -9,10 +9,7 @@ import com.example.screencatalog.service.ConvertData;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /* Class that show the menu */
@@ -86,9 +83,15 @@ public class Principal {
         /* Search episode from title */
         System.out.println("\nWrite full/part name of a episode:");
         var titlePart = input.nextLine(); //read the title part inputted by the user
-        episodes.stream()
-                .filter(e -> e.getTitle().contains(titlePart))
-                .findFirst(); //find the first occurrence of the title part
+        Optional<Episode> searchedEpisode = episodes.stream()
+                .filter(e -> e.getTitle().toUpperCase().contains(titlePart.toUpperCase()))
+                .findFirst();//find the first occurrence of the title part
+        if (searchedEpisode.isPresent()) { //test if searchedEpisode is not null
+            System.out.println("Episode found!");
+            System.out.println(searchedEpisode.get()); //print episode (toString)
+        } else {
+            System.out.println("Episode not found!");
+        }
 
 //        /* Filter episodes from a year */
 //        System.out.println("\nFrom which year do you want to see the episodes?");
