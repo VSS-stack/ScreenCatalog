@@ -108,5 +108,11 @@ public class Principal {
 //                                " - Episode: " + e.getTitle() +
 //                                " - Releasing date: " + e.getReleasingDate().format(formatter)
 //                ));
+
+        /* Show the average rating for the season */
+        Map<Integer, Double> ratingBySeason = episodes.stream()
+                .filter(e -> e.getRating() > 0.0)
+            .collect(Collectors.groupingBy(Episode::getSeason, Collectors.averagingDouble(Episode::getRating)));
+        System.out.println(ratingBySeason);
     }
 }
