@@ -113,6 +113,14 @@ public class Principal {
         Map<Integer, Double> ratingBySeason = episodes.stream()
                 .filter(e -> e.getRating() > 0.0)
             .collect(Collectors.groupingBy(Episode::getSeason, Collectors.averagingDouble(Episode::getRating)));
-        System.out.println(ratingBySeason);
+        System.out.println("\n" + ratingBySeason);
+
+        DoubleSummaryStatistics stat = episodes.stream()
+                .filter(e -> e.getRating() > 0.0)
+                .collect(Collectors.summarizingDouble(Episode::getRating));
+        System.out.println("\nAverage: " + stat.getAverage());
+        System.out.println("Min: " + stat.getMin());
+        System.out.println(("Max: " + stat.getMax()));
+        System.out.println("Number of episodes: " + stat.getCount());
     }
 }
